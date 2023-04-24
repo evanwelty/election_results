@@ -1,0 +1,218 @@
+WITH DEM_2000 AS (
+SELECT county_fips, state, county_name,
+COALESCE(MAX(CASE WHEN mode = 'TOTAL' THEN candidatevotes END),
+SUM(CASE WHEN mode <> 'TOTAL' THEN candidatevotes END)) AS "2000_DEM_Votes"
+FROM public."county_presidential_elections"
+WHERE party = 'DEMOCRAT' AND year = '2000' 
+GROUP BY county_fips, state, county_name
+),
+
+DEM_2004 AS (
+SELECT county_fips, state, county_name,
+COALESCE(MAX(CASE WHEN mode = 'TOTAL' THEN candidatevotes END),
+SUM(CASE WHEN mode <> 'TOTAL' THEN candidatevotes END)) AS "2004_DEM_Votes"
+FROM public."county_presidential_elections"
+WHERE party = 'DEMOCRAT' AND year = '2004' 
+GROUP BY county_fips, state, county_name
+),
+
+DEM_2008 AS (
+SELECT county_fips, state, county_name,
+COALESCE(MAX(CASE WHEN mode = 'TOTAL' THEN candidatevotes END),
+SUM(CASE WHEN mode <> 'TOTAL' THEN candidatevotes END)) AS "2008_DEM_Votes"
+FROM public."county_presidential_elections"
+WHERE party = 'DEMOCRAT' AND year = '2008'
+GROUP BY county_fips, state, county_name
+),
+
+DEM_2012 AS (
+SELECT county_fips, state, county_name,
+COALESCE(MAX(CASE WHEN mode = 'TOTAL' THEN candidatevotes END),
+SUM(CASE WHEN mode <> 'TOTAL' THEN candidatevotes END)) AS "2012_DEM_Votes"
+FROM public."county_presidential_elections"
+WHERE party = 'DEMOCRAT' AND year = '2012'
+GROUP BY county_fips, state, county_name
+),
+
+DEM_2016 AS (
+SELECT county_fips, state, county_name,
+COALESCE(MAX(CASE WHEN mode = 'TOTAL' THEN candidatevotes END),
+SUM(CASE WHEN mode <> 'TOTAL' THEN candidatevotes END)) AS "2016_DEM_Votes"
+FROM public."county_presidential_elections"
+WHERE party = 'DEMOCRAT' AND year = '2016'
+GROUP BY county_fips, state, county_name, totalvotes
+),
+
+DEM_2020 AS (
+SELECT county_fips, state, county_name,
+COALESCE(MAX(CASE WHEN mode = 'TOTAL' THEN candidatevotes END),
+SUM(CASE WHEN mode <> 'TOTAL' THEN candidatevotes END)) AS "2020_DEM_Votes"
+FROM public."county_presidential_elections"
+WHERE party = 'DEMOCRAT' AND year = '2020'
+GROUP BY county_fips, state, county_name
+),
+
+GOP_2000 AS (
+
+SELECT county_fips, state, county_name,
+       COALESCE(MAX(CASE WHEN mode = 'TOTAL' THEN candidatevotes END),
+                SUM(CASE WHEN mode <> 'TOTAL' THEN candidatevotes END)) AS "2000_GOP_Votes"
+FROM public."county_presidential_elections"
+WHERE party = 'REPUBLICAN' AND year = '2000'
+GROUP BY county_fips, state, county_name
+
+), 
+
+GOP_2004 AS (
+SELECT county_fips, state, county_name,
+       COALESCE(MAX(CASE WHEN mode = 'TOTAL' THEN candidatevotes END),
+                SUM(CASE WHEN mode <> 'TOTAL' THEN candidatevotes END)) AS "2004_GOP_Votes"
+FROM public."county_presidential_elections"
+WHERE party = 'REPUBLICAN' AND year = '2004'
+GROUP BY county_fips, state, county_name
+),
+
+GOP_2008 AS (
+SELECT county_fips, state, county_name,
+       COALESCE(MAX(CASE WHEN mode = 'TOTAL' THEN candidatevotes END),
+                SUM(CASE WHEN mode <> 'TOTAL' THEN candidatevotes END)) AS "2008_GOP_Votes"
+FROM public."county_presidential_elections"
+WHERE party = 'REPUBLICAN' AND year = '2008'
+GROUP BY county_fips, state, county_name
+),
+
+GOP_2012 AS (
+SELECT county_fips, state, county_name,
+       COALESCE(MAX(CASE WHEN mode = 'TOTAL' THEN candidatevotes END),
+                SUM(CASE WHEN mode <> 'TOTAL' THEN candidatevotes END)) AS "2012_GOP_Votes"
+FROM public."county_presidential_elections"
+WHERE party = 'REPUBLICAN' AND year = '2012'
+GROUP BY county_fips, state, county_name
+),
+
+GOP_2016 AS (
+SELECT county_fips, state, county_name,
+       COALESCE(MAX(CASE WHEN mode = 'TOTAL' THEN candidatevotes END),
+                SUM(CASE WHEN mode <> 'TOTAL' THEN candidatevotes END)) AS "2016_GOP_Votes"
+FROM public."county_presidential_elections"
+WHERE party = 'REPUBLICAN' AND year = '2016'
+GROUP BY county_fips, state, county_name
+),
+
+GOP_2020 AS (
+SELECT county_fips, state, county_name,
+       COALESCE(MAX(CASE WHEN mode = 'TOTAL' THEN candidatevotes END),
+                SUM(CASE WHEN mode <> 'TOTAL' THEN candidatevotes END)) AS "2020_GOP_Votes"
+FROM public."county_presidential_elections"
+WHERE party = 'REPUBLICAN' AND year = '2020'
+GROUP BY county_fips, state, county_name
+),
+
+TOT_2000 AS (
+SELECT DISTINCT county_fips, state, county_name, totalvotes AS "Total_2000_Votes"
+FROM public."county_presidential_elections"
+WHERE year = '2000'AND totalvotes != 0
+
+),
+
+TOT_2004 AS (
+SELECT DISTINCT county_fips, state, county_name, totalvotes as "Total_2004_Votes"
+FROM public."county_presidential_elections"
+WHERE year = '2004'AND totalvotes != 0
+
+),
+
+TOT_2008 AS (
+SELECT DISTINCT county_fips, state, county_name, totalvotes as "Total_2008_Votes"
+FROM public."county_presidential_elections"
+WHERE year = '2008'AND totalvotes != 0
+
+),
+
+TOT_2012 AS (
+SELECT DISTINCT county_fips, state, county_name, totalvotes AS "Total_2012_Votes"
+FROM public."county_presidential_elections"
+WHERE year = '2012'AND totalvotes != 0
+
+),
+
+TOT_2016 AS (
+SELECT DISTINCT county_fips, state, county_name, totalvotes AS "Total_2016_Votes"
+FROM public."county_presidential_elections"
+WHERE year = '2016'AND totalvotes != 0
+
+),
+
+TOT_2020 AS (
+SELECT county_fips, state, county_name, totalvotes AS "Total_2020_Votes"
+FROM public."county_presidential_elections"
+WHERE year = '2020'AND totalvotes != 0
+
+)
+
+
+SELECT DISTINCT d1.county_fips, d1.state, d1.county_name, 
+d1."2000_DEM_Votes", r1."2000_GOP_Votes", t1."Total_2000_Votes",
+d2."2004_DEM_Votes", r2."2004_GOP_Votes", t2."Total_2004_Votes",
+d3."2008_DEM_Votes", r3."2008_GOP_Votes", t3."Total_2008_Votes",
+d4."2012_DEM_Votes", r4."2012_GOP_Votes", t4."Total_2012_Votes", 
+d5."2016_DEM_Votes", r5."2016_GOP_Votes", t5."Total_2016_Votes",
+d6."2020_DEM_Votes", r6."2020_GOP_Votes", t6."Total_2020_Votes"
+
+
+FROM DEM_2000 d1
+
+JOIN DEM_2004 d2
+ON d1.county_fips=d2.county_fips
+
+JOIN DEM_2008 d3
+ON d2.county_fips=d3.county_fips
+
+JOIN DEM_2012 d4
+ON d3.county_fips=d4.county_fips
+
+JOIN DEM_2016 d5
+ON d4.county_fips=d5.county_fips
+
+JOIN DEM_2020 d6
+ON d5.county_fips=d6.county_fips
+
+JOIN GOP_2000 r1
+	ON d1.county_fips=r1.county_fips
+
+JOIN GOP_2004 r2
+	ON r1.county_fips=r2.county_fips
+	
+JOIN GOP_2008 r3
+	ON r2.county_fips=r3.county_fips
+
+JOIN GOP_2012 r4
+	ON r3.county_fips=r4.county_fips
+
+JOIN GOP_2016 r5
+	ON r4.county_fips=r5.county_fips
+
+JOIN GOP_2020 r6
+	ON r5.county_fips=r6.county_fips
+
+JOIN TOT_2000 t1
+ON r6.county_fips=t1.county_fips
+
+JOIN TOT_2004 t2
+ON t1.county_fips=t2.county_fips
+
+JOIN TOT_2008 t3
+ON t2.county_fips=t3.county_fips
+
+JOIN TOT_2012 t4
+ON t3.county_fips=t4.county_fips
+
+JOIN TOT_2016 t5
+ON t4.county_fips=t5.county_fips
+
+JOIN TOT_2020 t6
+ON t5.county_fips=t6.county_fips
+
+
+ORDER BY D1.state
+
